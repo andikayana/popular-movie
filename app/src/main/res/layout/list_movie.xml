@@ -1,19 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-    <android.support.v7.widget.CardView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:elevation="3dp"
-        app:cardUseCompatPadding="true"
-        android:layout_marginTop="6dp"
-        android:layout_marginLeft="3dp"
-        android:layout_marginRight="3dp"
-        >
+    app:cardCornerRadius="4dp"
+    app:cardElevation="3dp"
+    app:contentPadding="2dp"
+    app:cardUseCompatPadding="true"
+    xmlns:android="http://schemas.android.com/apk/res/android">
         
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -21,24 +15,13 @@
             
             <ImageView
                 android:id="@+id/imgPoster"
-                android:layout_width="185dp"
-                android:layout_height="278dp"
-                android:src="@drawable/poster"
-                android:scaleType="centerCrop"/>
-            <TextView
-                android:id="@+id/tvTitle"
-                android:layout_width="185dp"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="Gaga gaga gaga gaga gaga gag fgfg ffga"
-                android:background="#80000000"
-                android:maxLines="2"
-                android:textColor="#FFFFFFFF"
-                android:textSize="14sp"
-                android:padding="5dp"
-                android:layout_alignBottom="@+id/imgPoster"/>
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true"
+                android:src="@drawable/poster"/>
+
         </RelativeLayout>
         
         
-    </android.support.v7.widget.CardView>
-
-</LinearLayout>
+</android.support.v7.widget.CardView>

@@ -54,10 +54,7 @@ public class PopularMovieAdapter extends RecyclerView.Adapter<PopularMovieAdapte
 
     static class PopularMovieViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.tvTitle)
-        TextView tvTitle;
-        @BindView(R.id.imgPoster)
-        ImageView imgPoster;
+        @BindView(R.id.imgPoster) ImageView imgPoster;
 
 
         public PopularMovieViewHolder(View itemView) {
@@ -66,7 +63,6 @@ public class PopularMovieAdapter extends RecyclerView.Adapter<PopularMovieAdapte
         }
 
         public void bind(ResultsItem resultsItem) {
-            tvTitle.setText(resultsItem.getTitle());
             String IMG_URL = "http://image.tmdb.org/t/p/";
             String IMG_SIZE = "w185";
             Glide.with(imgPoster.getContext())

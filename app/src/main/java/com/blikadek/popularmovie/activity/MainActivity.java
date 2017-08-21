@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         popularMovieAdapter = new PopularMovieAdapter(mResultsItems);
 
         //SETUP RECYCLERVIEW
-        mGridLayoutManager = new GridLayoutManager(this, 2);
+        mGridLayoutManager = new GridLayoutManager(MainActivity.this, 2);
         recyclerView.setLayoutManager(mGridLayoutManager);
         recyclerView.setAdapter(popularMovieAdapter);
 
