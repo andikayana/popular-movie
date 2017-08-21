@@ -46,6 +46,12 @@ public class PopularMovieAdapter extends RecyclerView.Adapter<PopularMovieAdapte
         return resultsItemList.size();
     }
 
+    public void setData(List<ResultsItem> mResultsItems) {
+        this.resultsItemList.clear();
+        resultsItemList.addAll(mResultsItems);
+        notifyDataSetChanged();
+    }
+
     static class PopularMovieViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.tvTitle)
