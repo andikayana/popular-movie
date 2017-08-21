@@ -2,6 +2,7 @@ package com.blikadek.popularmovie.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -29,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
 
     @BindView(R.id.rvPopularMovie) RecyclerView recyclerView;
-    LinearLayoutManager mLinearLayoutManager;
+    GridLayoutManager mGridLayoutManager;
     PopularMovieAdapter popularMovieAdapter;
     private List<ResultsItem> mResultsItems = new ArrayList<>();
 
@@ -39,14 +40,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        mLinearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-
-        //SETUP Adapter
+        //SETUp Adapter
         popularMovieAdapter = new PopularMovieAdapter(mResultsItems);
 
         //SETUP RECYCLERVIEW
-        mLinearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        recyclerView.setLayoutManager(mLinearLayoutManager);
+        mGridLayoutManager = new GridLayoutManager(this, 2);
+        recyclerView.setLayoutManager(mGridLayoutManager);
         recyclerView.setAdapter(popularMovieAdapter);
 
         getData();
