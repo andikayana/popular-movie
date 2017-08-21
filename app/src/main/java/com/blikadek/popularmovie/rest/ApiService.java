@@ -12,7 +12,7 @@ public class ApiService {
     private static final String BASE_URL = "https://api.themoviedb.org/3/";
     private static final String BASE_IMG_URL = "http://image.tmdb.org/t/p/";
 
-    private static Retrofit mRetrofit;
+    private static Retrofit mRetrofit, mRetrofitImage;
 
     public static Retrofit getRetrofitClient(){
         if (mRetrofit ==null ){
@@ -20,7 +20,17 @@ public class ApiService {
                     .baseUrl(BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
+        }
+        return mRetrofit;
+    }
 
+
+    public static Retrofit getRetrofitImageClient(){
+        if (mRetrofit ==null ){
+            mRetrofit = new Retrofit.Builder()
+                    .baseUrl(BASE_IMG_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
         }
         return mRetrofit;
     }

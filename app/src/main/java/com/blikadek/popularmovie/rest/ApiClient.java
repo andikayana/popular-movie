@@ -18,4 +18,5 @@ public interface ApiClient {
             @Query("api_key") String api_key,
             @Query("language") String language
     );
+
 }
