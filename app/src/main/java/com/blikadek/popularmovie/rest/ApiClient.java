@@ -1,0 +1,21 @@
+package com.blikadek.popularmovie.rest;
+
+import com.blikadek.popularmovie.pojo.ApiResponse;
+
+import retrofit2.Call;
+import retrofit2.http.GET;
+import retrofit2.http.Query;
+
+/**
+ * Created by M13x5aY on 21/08/2017.
+ */
+
+public interface ApiClient {
+
+
+    @GET("movie/popular")
+    Call<ApiResponse> getPopularMovieList(
+            @Query("api_key") String api_key,
+            @Query("language") String language
+    );
+}
