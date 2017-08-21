@@ -19,6 +19,9 @@ public class ApiResponse{
 	@SerializedName("total_results")
 	private int totalResults;
 
+	public ApiResponse() {
+	}
+
 	public void setPage(int page){
 		this.page = page;
 	}

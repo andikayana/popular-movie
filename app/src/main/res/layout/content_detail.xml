@@ -15,10 +15,11 @@
 
         <ImageView
             android:id="@+id/poster"
-            android:layout_weight="0.3"
+            android:layout_weight="0.2"
             android:scaleType="fitCenter"
             android:layout_width="0dp"
             android:layout_height="120dp"
+            android:layout_marginRight="10dp"
             android:src="@drawable/poster"/>
 
         <LinearLayout
@@ -30,6 +31,7 @@
             <TextView
                 android:layout_marginTop="5dp"
                 android:text="Release Date"
+                android:textColor="@color/icons"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
@@ -42,6 +44,7 @@
             <TextView
                 android:layout_marginTop="10dp"
                 android:text="Vote Average"
+                android:textColor="@color/icons"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
@@ -51,8 +54,23 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
+            <RatingBar
+                android:layout_marginTop="4dp"
+                android:id="@+id/ratingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Base.Widget.AppCompat.RatingBar.Small"
+                android:numStars="10"
+                android:stepSize="0.2"
+                android:isIndicator="true"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:progressTint="@color/icons"
+                />
+
         </LinearLayout>
     </LinearLayout>
+
+
 
     <TextView
         android:textSize="18sp"

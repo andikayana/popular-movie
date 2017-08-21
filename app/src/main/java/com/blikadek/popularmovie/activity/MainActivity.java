@@ -25,7 +25,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MovieClickListeners{
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -43,12 +43,15 @@ public class MainActivity extends AppCompatActivity {
         //SETUp Adapter
         popularMovieAdapter = new PopularMovieAdapter(mResultsItems);
 
+
         //SETUP RECYCLERVIEW
         mGridLayoutManager = new GridLayoutManager(MainActivity.this, 2);
         recyclerView.setLayoutManager(mGridLayoutManager);
         recyclerView.setAdapter(popularMovieAdapter);
 
         getData();
+
+        popularMovieAdapter.setItemClickListenr(MainActivity.this);
     }
 
     public void getData(){
@@ -75,5 +78,12 @@ public class MainActivity extends AppCompatActivity {
                 Log.e(TAG, "onFailure: ", t);
             }
         });
+    }
+
+    @Override
+    public void onItemMovieClicked(ResultsItem movieItem) {
+        Toast.makeText(this, "test", Toast.LENGTH_SHORT).show();
+        DetailActivity.start(this, movieItem.toJson());
+
     }
 }

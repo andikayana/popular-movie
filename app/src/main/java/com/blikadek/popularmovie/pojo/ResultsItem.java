@@ -1,5 +1,6 @@
 package com.blikadek.popularmovie.pojo;
 
+import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -48,6 +49,9 @@ public class ResultsItem{
 
 	@SerializedName("vote_count")
 	private int voteCount;
+
+	public ResultsItem() {
+	}
 
 	public void setOverview(String overview){
 		this.overview = overview;
@@ -181,4 +185,12 @@ public class ResultsItem{
 			",vote_count = '" + voteCount + '\'' + 
 			"}";
 		}
+
+	public String toJson(){
+		return new Gson().toJson(this);
+	}
+
+	public ResultsItem fromJson(String newsJson){
+		return new Gson().fromJson(newsJson, ResultsItem.class);
+	}
 }
