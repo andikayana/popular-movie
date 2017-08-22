@@ -78,7 +78,6 @@ public class DetailActivity extends AppCompatActivity {
             String newsJson = getIntent().getStringExtra(KEY_EXTRA_MOVIE);
             mResultsItem = new ResultsItem().fromJson(newsJson);
 
-            //Toast.makeText(this, "Show movie " + mResultsItem.getTitle(), Toast.LENGTH_SHORT).show();
             String IMG_URL = "http://image.tmdb.org/t/p/";
             String IMG_SIZE = "w185";
             String IMG_SIZE_BACKDROP ="w300";
@@ -145,9 +144,11 @@ public class DetailActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
+            //tombol Arrow for back
             case android.R.id.home:
                 DetailActivity.this.finish();
                 return true;
+            //tombl share
             case R.id.menu_share:
                 Toast.makeText(this, "Share Clicked", Toast.LENGTH_SHORT).show();
                 return true;

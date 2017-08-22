@@ -1,6 +1,7 @@
 package com.blikadek.popularmovie.activity;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -27,11 +28,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity implements MovieClickListeners{
+public class MainActivity extends AppCompatActivity implements MovieClickListeners, SwipeRefreshLayout.OnRefreshListener{
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
     @BindView(R.id.rvPopularMovie) RecyclerView recyclerView;
+    @BindView(R.id.swipeRefresh)SwipeRefreshLayout swipeRefresh;
     GridLayoutManager mGridLayoutManager;
     PopularMovieAdapter popularMovieAdapter;
     private List<ResultsItem> mResultsItems = new ArrayList<>();
@@ -45,8 +47,6 @@ public class MainActivity extends AppCompatActivity implements MovieClickListene
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-
-
         //SETUp Adapter
         popularMovieAdapter = new PopularMovieAdapter(mResultsItems);
         popularMovieAdapter.setItemClickListenr(MainActivity.this);
@@ -57,7 +57,15 @@ public class MainActivity extends AppCompatActivity implements MovieClickListene
         recyclerView.setAdapter(popularMovieAdapter);
         selectMenu="Popular Movie";
 
-        getData();
+        swipeRefresh.setOnRefreshListener(this);
+        swipeRefresh.post(new Runnable() {
+            @Override
+            public void run() {
+                swipeRefresh.setRefreshing(true);
+                getData();
+
+            }
+        });
 
 
     }
@@ -86,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements MovieClickListene
                         mResultsItems = apiResponse.getResults();
                         popularMovieAdapter.setData(mResultsItems);
                         getSupportActionBar().setTitle(selectMenu);
-
+                        if(swipeRefresh.isRefreshing()) swipeRefresh.setRefreshing(false);
 
                     }
                 }
@@ -97,6 +105,8 @@ public class MainActivity extends AppCompatActivity implements MovieClickListene
                     Log.e(TAG, "onFailure: ", t);
                 }
             });
+
+
         }
 
     }
@@ -134,5 +144,10 @@ public class MainActivity extends AppCompatActivity implements MovieClickListene
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onRefresh() {
+        getData();
     }
 }
