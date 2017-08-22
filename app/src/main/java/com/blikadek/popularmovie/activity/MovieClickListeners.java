@@ -1,6 +1,6 @@
 package com.blikadek.popularmovie.activity;
 
-import com.blikadek.popularmovie.pojo.ResultsItem;
+import com.blikadek.popularmovie.model.ResultsItem;
 
 /**
  * Created by M13x5aY on 21/08/2017.

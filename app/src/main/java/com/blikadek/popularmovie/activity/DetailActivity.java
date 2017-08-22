@@ -8,10 +8,9 @@ import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.blikadek.popularmovie.R;
-import com.blikadek.popularmovie.pojo.ResultsItem;
+import com.blikadek.popularmovie.model.ResultsItem;
 import com.bumptech.glide.Glide;
 
 import butterknife.BindView;
@@ -26,8 +25,9 @@ public class DetailActivity extends AppCompatActivity {
     @BindView(R.id.poster) ImageView poster;
     @BindView(R.id.releaseDate) TextView releaseDate;
     @BindView(R.id.rating) TextView rating;
-    @BindView(R.id.ratingBar) RatingBar ratingBar;
     @BindView(R.id.synopsis) TextView synopsis;
+    @BindView(R.id.vote) TextView vote;
+    @BindView(R.id.language) TextView language;
     @BindView(R.id.expandedImage)ImageView backdrop;
 
 
@@ -60,8 +60,9 @@ public class DetailActivity extends AppCompatActivity {
 
             getSupportActionBar().setTitle(mResultsItem.getOriginalTitle());
             releaseDate.setText(mResultsItem.getReleaseDate());
-            rating.setText(String.valueOf(mResultsItem.getVoteAverage()));
-            ratingBar.setRating(Float.parseFloat(String.valueOf(mResultsItem.getVoteAverage())));
+            rating.setText(String.valueOf(mResultsItem.getVoteAverage())+"/10");
+            vote.setText(mResultsItem.getVoteCount()+" Vote");
+            language.setText(mResultsItem.getOriginalLanguage());
             synopsis.setText(mResultsItem.getOverview());
 
             Glide.with(backdrop.getContext())

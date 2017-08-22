@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:orientation="vertical"
+<LinearLayout android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:id="@+id/head_bar"
@@ -20,76 +20,143 @@
             android:layout_width="0dp"
             android:layout_height="120dp"
             android:layout_marginRight="10dp"
+            android:layout_marginLeft="2dp"
             android:src="@drawable/poster"/>
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_weight="0.7"
             android:layout_width="0dp"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="6dp">
 
-            <TextView
-                android:layout_marginTop="5dp"
-                android:text="Release Date"
-                android:textColor="@color/icons"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:id="@+id/releaseDate"
-                android:textColor="@color/icons"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2017-10-10"/>
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
 
-            <TextView
-                android:layout_marginTop="10dp"
-                android:text="Vote Average"
-                android:textColor="@color/icons"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_date"
+                    android:layout_marginRight="10dp"/>
 
-            <TextView
-                android:id="@+id/rating"
-                android:textColor="@color/icons"
+                <TextView
+                    android:id="@+id/releaseDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="2017-10-10"
+                    android:gravity="center"
+                    android:textColor="@color/icons" />
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="9.8"/>
+                android:orientation="horizontal"
+                android:layout_marginTop="6dp">
 
-            <RatingBar
-                android:layout_marginTop="4dp"
-                android:id="@+id/ratingBar"
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_star"
+                    android:layout_marginRight="10dp"/>
+
+                <TextView
+                    android:id="@+id/rating"
+                    android:textColor="@color/icons"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="9.8"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="6dp">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_people"
+                android:layout_marginRight="10dp"/>
+
+            <TextView
+                android:id="@+id/vote"
+                android:textColor="@color/icons"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="93333 Vote"/>
+
+        </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/Base.Widget.AppCompat.RatingBar.Small"
-                android:numStars="10"
-                android:stepSize="0.2"
-                android:isIndicator="true"
-                android:rating="9.6"
-                android:backgroundTint="@color/colorPrimaryDark"
-                android:progressTint="@color/icons"
-                />
+                android:orientation="horizontal"
+                android:layout_marginTop="6dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_language"
+                    android:layout_marginRight="10dp"/>
+
+                <TextView
+                    android:id="@+id/language"
+                    android:textColor="@color/icons"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textAllCaps="true"
+                    android:text="EN"/>
+
+            </LinearLayout>
 
         </LinearLayout>
     </LinearLayout>
 
-
-
-    <TextView
-        android:textSize="18sp"
-        android:textColor="@color/primary_text"
-        android:padding="10dp"
-        android:textStyle="bold"
-        android:text="Synopsis"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <TextView
-        android:id="@+id/synopsis"
-        android:textSize="16sp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/secondary_text"/>
+        app:cardElevation="3dp"
+        app:contentPadding="2dp"
+        app:cardUseCompatPadding="true">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:paddingRight="10dp"
+                android:paddingLeft="10dp"
+                android:text="Synopsis"
+                android:textColor="@color/primary_text"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/synopsis"
+                android:textSize="16sp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/secondary_text"
+                android:text="I Meme Nunu Sele"/>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
 </LinearLayout>

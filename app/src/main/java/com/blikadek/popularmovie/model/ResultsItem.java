@@ -1,4 +1,4 @@
-package com.blikadek.popularmovie.pojo;
+package com.blikadek.popularmovie.model;
 
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;

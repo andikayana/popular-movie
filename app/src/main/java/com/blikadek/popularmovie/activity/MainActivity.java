@@ -12,8 +12,8 @@ import android.widget.Toast;
 import com.blikadek.popularmovie.BuildConfig;
 import com.blikadek.popularmovie.R;
 import com.blikadek.popularmovie.adapter.PopularMovieAdapter;
-import com.blikadek.popularmovie.pojo.ApiResponse;
-import com.blikadek.popularmovie.pojo.ResultsItem;
+import com.blikadek.popularmovie.model.ApiResponse;
+import com.blikadek.popularmovie.model.ResultsItem;
 import com.blikadek.popularmovie.rest.ApiClient;
 import com.blikadek.popularmovie.rest.ApiService;
 
@@ -83,6 +83,7 @@ public class MainActivity extends AppCompatActivity implements MovieClickListene
                     if (apiResponse != null){
                         mResultsItems = apiResponse.getResults();
                         popularMovieAdapter.setData(mResultsItems);
+
                     }
                 }
 
@@ -113,12 +114,12 @@ public class MainActivity extends AppCompatActivity implements MovieClickListene
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.menu_PopularMovie:
-                apiResponseCall=null;
+                //apiResponseCall=null;
                 selectMenu =  item.getTitle().toString();
                 getData();
                 return true;
             case R.id.menu_HightRated:
-                apiResponseCall=null;
+                //apiResponseCall=null;
                 selectMenu =  item.getTitle().toString();
                 getData();
                 return true;

@@ -1,6 +1,6 @@
 package com.blikadek.popularmovie.rest;
 
-import com.blikadek.popularmovie.pojo.ApiResponse;
+import com.blikadek.popularmovie.model.ApiResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

@@ -3,9 +3,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="4dp"
     app:cardElevation="3dp"
-    app:contentPadding="2dp"
     app:cardUseCompatPadding="true"
     xmlns:android="http://schemas.android.com/apk/res/android">
         
@@ -18,7 +16,6 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:scaleType="fitCenter"
-                android:adjustViewBounds="true"
                 android:src="@drawable/poster"/>
 
         </RelativeLayout>
