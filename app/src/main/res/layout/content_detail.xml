@@ -39,7 +39,8 @@
                 android:id="@+id/releaseDate"
                 android:textColor="@color/icons"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="2017-10-10"/>
 
             <TextView
                 android:layout_marginTop="10dp"
@@ -52,7 +53,8 @@
                 android:id="@+id/rating"
                 android:textColor="@color/icons"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="9.8"/>
 
             <RatingBar
                 android:layout_marginTop="4dp"
@@ -63,6 +65,7 @@
                 android:numStars="10"
                 android:stepSize="0.2"
                 android:isIndicator="true"
+                android:rating="9.6"
                 android:backgroundTint="@color/colorPrimaryDark"
                 android:progressTint="@color/icons"
                 />
