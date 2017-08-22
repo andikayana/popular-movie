@@ -1,9 +1,11 @@
 package com.blikadek.popularmovie.rest;
 
 import com.blikadek.popularmovie.model.ApiResponse;
+import com.blikadek.popularmovie.model.review.ReviewResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /**
@@ -22,7 +24,9 @@ public interface ApiService {
             @Query("api_key") String api_key,
             @Query("language") String language
     );
-
-
-
+    @GET("movie/{id}/reviews")
+    Call<ReviewResponse> getReviews(
+            @Path("id") long id,
+            @Query("api_key") String api_key
+    );
 }
