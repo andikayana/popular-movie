@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.blikadek.popularmovie.R;
+import com.blikadek.popularmovie.activity.MainActivity;
 import com.blikadek.popularmovie.activity.MovieClickListeners;
 import com.blikadek.popularmovie.model.ResultsItem;
 import com.bumptech.glide.Glide;
@@ -87,6 +88,8 @@ public class PopularMovieAdapter extends RecyclerView.Adapter<PopularMovieAdapte
             Glide.with(imgPoster.getContext())
                     .load(IMG_URL + IMG_SIZE + resultsItem.getPosterPath())
                     .into(imgPoster);
+
+
 
         }
     }

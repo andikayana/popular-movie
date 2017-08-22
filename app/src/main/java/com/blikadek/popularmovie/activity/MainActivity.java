@@ -45,6 +45,8 @@ public class MainActivity extends AppCompatActivity implements MovieClickListene
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+
+
         //SETUp Adapter
         popularMovieAdapter = new PopularMovieAdapter(mResultsItems);
         popularMovieAdapter.setItemClickListenr(MainActivity.this);
@@ -83,6 +85,8 @@ public class MainActivity extends AppCompatActivity implements MovieClickListene
                     if (apiResponse != null){
                         mResultsItems = apiResponse.getResults();
                         popularMovieAdapter.setData(mResultsItems);
+                        getSupportActionBar().setTitle(selectMenu);
+
 
                     }
                 }
