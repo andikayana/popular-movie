@@ -1,12 +1,17 @@
 package com.blikadek.popularmovie.adapter;
 
+import android.content.Context;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.blikadek.popularmovie.R;
+import com.blikadek.popularmovie.activity.DasboardActivity;
 import com.blikadek.popularmovie.activity.MainActivity;
 import com.blikadek.popularmovie.activity.MovieClickListeners;
 import com.blikadek.popularmovie.model.ResultsItem;
@@ -32,11 +37,20 @@ public class PopularMovieAdapter extends RecyclerView.Adapter<PopularMovieAdapte
 
     @Override
     public PopularMovieViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.list_movie, parent, false);
-        PopularMovieViewHolder viewHolder = new PopularMovieViewHolder(view);
-        return viewHolder;
+        if (DasboardActivity.isMe){
+            View view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.list_poster_dasboard, parent, false);
+            return new PopularMovieViewHolder(view);
+        } else {
+            View view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.list_movie, parent, false);
+            return new PopularMovieViewHolder(view);
+        }
+
+
+
     }
+
 
     @Override
     public void onBindViewHolder(PopularMovieViewHolder holder, final int position) {
@@ -75,22 +89,29 @@ public class PopularMovieAdapter extends RecyclerView.Adapter<PopularMovieAdapte
     static class PopularMovieViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.imgPoster) ImageView imgPoster;
+        //@BindView(R.id.imgPosterDasboard) ImageView imgPosterDasboard;
 
 
         public PopularMovieViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+
+
         }
 
         public void bind(ResultsItem resultsItem) {
             String IMG_URL = "http://image.tmdb.org/t/p/";
             String IMG_SIZE = "w185";
+
             Glide.with(imgPoster.getContext())
                     .load(IMG_URL + IMG_SIZE + resultsItem.getPosterPath())
                     .into(imgPoster);
 
-
+            /*Glide.with(imgPosterDasboard.getContext())
+                    .load(IMG_URL + IMG_SIZE + resultsItem.getPosterPath())
+                    .into(imgPosterDasboard);*/
 
         }
     }
+
 }

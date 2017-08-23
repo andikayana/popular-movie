@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="Movie">
+        <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_popular_movie"
+            android:icon="@drawable/ic_popular_movie"
+            android:title="Popular Movie" />
+        <item
+            android:id="@+id/nav_hight_rate"
+            android:icon="@drawable/ic_hight_rate"
+            android:title="Hight Rate" />
+        <item
+            android:id="@+id/nav_favorite"
+            android:icon="@drawable/ic_favorite"
+            android:title="Favorite" />
+        </group>
+    </item>
+
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Share" />
+            <item
+                android:id="@+id/nav_about"
+                android:icon="@drawable/ic_menu_send"
+                android:title="About" />
+        </menu>
+    </item>
+
+</menu>

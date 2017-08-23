@@ -46,7 +46,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/fab_margin"
         android:layout_gravity="bottom|end"
-        app:srcCompat="@drawable/ic_star_unselected" />
+        app:srcCompat="@drawable/ic_favorite_select" />
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"

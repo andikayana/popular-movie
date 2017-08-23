@@ -1,5 +1,7 @@
 package com.blikadek.popularmovie.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -30,6 +32,7 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity implements MovieClickListeners, SwipeRefreshLayout.OnRefreshListener{
 
+
     private static final String TAG = MainActivity.class.getSimpleName();
 
     @BindView(R.id.rvPopularMovie) RecyclerView recyclerView;
@@ -37,9 +40,9 @@ public class MainActivity extends AppCompatActivity implements MovieClickListene
     GridLayoutManager mGridLayoutManager;
     PopularMovieAdapter popularMovieAdapter;
     private List<ResultsItem> mResultsItems = new ArrayList<>();
-
     String selectMenu;
     private Call<ApiResponse> apiResponseCall;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +50,18 @@ public class MainActivity extends AppCompatActivity implements MovieClickListene
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+
+        //getIntent'
+        int buttonid = getIntent().getIntExtra("button", 0);
+        switch (buttonid){
+            case R.id.btnMore:
+                selectMenu = "Popular Movie";
+                break;
+            case R.id.btnMoreHightRate:
+                selectMenu = "Hight Rated";
+                break;
+
+        }
         //SETUp Adapter
         popularMovieAdapter = new PopularMovieAdapter(mResultsItems);
         popularMovieAdapter.setItemClickListenr(MainActivity.this);
@@ -55,8 +70,8 @@ public class MainActivity extends AppCompatActivity implements MovieClickListene
         mGridLayoutManager = new GridLayoutManager(MainActivity.this, 2);
         recyclerView.setLayoutManager(mGridLayoutManager);
         recyclerView.setAdapter(popularMovieAdapter);
-        selectMenu="Popular Movie";
 
+        //swipe to refresh
         swipeRefresh.setOnRefreshListener(this);
         swipeRefresh.post(new Runnable() {
             @Override
@@ -68,20 +83,24 @@ public class MainActivity extends AppCompatActivity implements MovieClickListene
         });
 
 
+
     }
 
     public void getData(){
         ApiService apiService = ApiClient.getRetrofitClient().create(ApiService.class);
-        if (Objects.equals(selectMenu, "Popular Movie")){
-            apiResponseCall = apiService.getPopularMovieList(
-                    BuildConfig.API_KEY,
-                    BuildConfig.DEFAULT_LANG
-            );
-        } else if (Objects.equals(selectMenu, "Hight Rated")){
-            apiResponseCall = apiService.getTopRatedList(
-                    BuildConfig.API_KEY,
-                    BuildConfig.DEFAULT_LANG
-            );
+        switch (selectMenu){
+            case "Popular Movie":
+                apiResponseCall = apiService.getPopularMovieList(
+                        BuildConfig.API_KEY,
+                        BuildConfig.DEFAULT_LANG
+                );
+                break;
+            case "Hight Rated":
+                apiResponseCall = apiService.getTopRatedList(
+                        BuildConfig.API_KEY,
+                        BuildConfig.DEFAULT_LANG
+                );
+                break;
         }
 
         Log.d(TAG, "getData: API_KEY " + BuildConfig.API_KEY);
@@ -93,8 +112,10 @@ public class MainActivity extends AppCompatActivity implements MovieClickListene
                     if (apiResponse != null){
                         mResultsItems = apiResponse.getResults();
                         popularMovieAdapter.setData(mResultsItems);
-                        getSupportActionBar().setTitle(selectMenu);
-                        if(swipeRefresh.isRefreshing()) swipeRefresh.setRefreshing(false);
+
+                        getSupportActionBar().setTitle(selectMenu); //set title on toolbar
+
+                        if(swipeRefresh.isRefreshing()) swipeRefresh.setRefreshing(false);  //stop refresh
 
                     }
                 }
@@ -115,6 +136,7 @@ public class MainActivity extends AppCompatActivity implements MovieClickListene
     public void onItemMovieClicked(ResultsItem movieItem) {
         //Toast.makeText(this, "test", Toast.LENGTH_SHORT).show();
         DetailActivity.start(this, movieItem.toJson());
+
 
     }
 
