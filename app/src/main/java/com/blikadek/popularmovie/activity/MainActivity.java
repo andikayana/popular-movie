@@ -49,9 +49,9 @@ public class MainActivity extends AppCompatActivity implements MovieClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
-        //getIntent'
+        //getIntent button more to get movie
         int buttonid = getIntent().getIntExtra("button", 0);
         switch (buttonid){
             case R.id.btnMore:
@@ -149,6 +149,10 @@ public class MainActivity extends AppCompatActivity implements MovieClickListene
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
+
+            case android.R.id.home:
+                MainActivity.this.finish();
+                return true;
             case R.id.menu_PopularMovie:
                 //apiResponseCall=null;
                 selectMenu =  item.getTitle().toString();
