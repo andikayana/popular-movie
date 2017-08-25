@@ -22,6 +22,7 @@ import com.blikadek.popularmovie.model.review.ResultsItemReview;
 import com.blikadek.popularmovie.model.review.ReviewResponse;
 import com.blikadek.popularmovie.rest.ApiClient;
 import com.blikadek.popularmovie.rest.ApiService;
+import com.blikadek.popularmovie.rest.DateFormater;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
@@ -83,7 +84,7 @@ public class DetailActivity extends AppCompatActivity {
             String IMG_SIZE_BACKDROP ="w300";
 
             getSupportActionBar().setTitle(mResultsItem.getOriginalTitle());
-            releaseDate.setText(mResultsItem.getReleaseDate());
+            releaseDate.setText(DateFormater.getDate(mResultsItem.getReleaseDate()));
             rating.setText(String.valueOf(mResultsItem.getVoteAverage())+"/10");
             vote.setText(mResultsItem.getVoteCount()+" Vote");
             language.setText(mResultsItem.getOriginalLanguage());

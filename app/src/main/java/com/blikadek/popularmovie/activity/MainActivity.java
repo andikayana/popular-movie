@@ -69,6 +69,7 @@ public class MainActivity extends AppCompatActivity implements MovieClickListene
         //SETUP RECYCLERVIEW
         mGridLayoutManager = new GridLayoutManager(MainActivity.this, 2);
         recyclerView.setLayoutManager(mGridLayoutManager);
+        recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(popularMovieAdapter);
 
         //swipe to refresh

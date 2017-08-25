@@ -8,7 +8,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -17,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.blikadek.popularmovie.BuildConfig;
@@ -29,7 +29,6 @@ import com.blikadek.popularmovie.rest.ApiService;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -45,16 +44,14 @@ public class DasboardActivity extends AppCompatActivity
 
     @BindView(R.id.rvlistPoster) RecyclerView rvlistPoster;
     @BindView(R.id.rvlistPoster_HightRate) RecyclerView rvlistPoster_HightRate;
-    @BindView(R.id.btnMore) Button btnMore;
-    @BindView(R.id.btnMoreHightRate) Button btnMoreHightRate;
+    @BindView(R.id.btnMore) TextView btnMore;
+    @BindView(R.id.btnMoreHightRate) TextView btnMoreHightRate;
     LinearLayoutManager mLinearLayoutManager;
     LinearLayoutManager mLinearLayoutManager_HightRate;
     PopularMovieAdapter popularMovieAdapter;
     PopularMovieAdapter popularMovieAdapter2;
     private List<ResultsItem> mResultsItems = new ArrayList<>();
     private List<ResultsItem> mResultsItems2 = new ArrayList<>();
-    String selectMenu;
-
 
     public static Boolean isMe;
 
@@ -85,7 +82,6 @@ public class DasboardActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-
         setup_PopularMovie();
         setup_HightRate();
     }
@@ -111,6 +107,7 @@ public class DasboardActivity extends AppCompatActivity
 
         //SETUP RECYCLERVIEW
         mLinearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        rvlistPoster.setHasFixedSize(true);
         rvlistPoster.setLayoutManager(mLinearLayoutManager);
         rvlistPoster.setAdapter(popularMovieAdapter);
 
@@ -151,6 +148,7 @@ public class DasboardActivity extends AppCompatActivity
         //SETUP RECYCLERVIEW
         mLinearLayoutManager_HightRate = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         rvlistPoster_HightRate.setLayoutManager(mLinearLayoutManager_HightRate);
+        rvlistPoster.setHasFixedSize(true);
         rvlistPoster_HightRate.setAdapter(popularMovieAdapter2);
 
         ApiService apiService = ApiClient.getRetrofitClient().create(ApiService.class);
@@ -244,4 +242,5 @@ public class DasboardActivity extends AppCompatActivity
     public void onItemMovieClicked(ResultsItem movieItem) {
         DetailActivity.start(this, movieItem.toJson());
     }
+
 }
