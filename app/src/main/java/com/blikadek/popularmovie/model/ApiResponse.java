@@ -14,7 +14,7 @@ public class ApiResponse{
 	private int totalPages;
 
 	@SerializedName("results")
-	private List<ResultsItem> results;
+	private List<MovieItem> results;
 
 	@SerializedName("total_results")
 	private int totalResults;
@@ -38,11 +38,11 @@ public class ApiResponse{
 		return totalPages;
 	}
 
-	public void setResults(List<ResultsItem> results){
+	public void setResults(List<MovieItem> results){
 		this.results = results;
 	}
 
-	public List<ResultsItem> getResults(){
+	public List<MovieItem> getResults(){
 		return results;
 	}
 

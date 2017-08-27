@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,7 +14,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,7 +21,7 @@ import com.blikadek.popularmovie.BuildConfig;
 import com.blikadek.popularmovie.R;
 import com.blikadek.popularmovie.adapter.PopularMovieAdapter;
 import com.blikadek.popularmovie.model.ApiResponse;
-import com.blikadek.popularmovie.model.ResultsItem;
+import com.blikadek.popularmovie.model.MovieItem;
 import com.blikadek.popularmovie.rest.ApiClient;
 import com.blikadek.popularmovie.rest.ApiService;
 
@@ -50,8 +48,8 @@ public class DasboardActivity extends AppCompatActivity
     LinearLayoutManager mLinearLayoutManager_HightRate;
     PopularMovieAdapter popularMovieAdapter;
     PopularMovieAdapter popularMovieAdapter2;
-    private List<ResultsItem> mResultsItems = new ArrayList<>();
-    private List<ResultsItem> mResultsItems2 = new ArrayList<>();
+    private List<MovieItem> mMovieItems = new ArrayList<>();
+    private List<MovieItem> mMovieItems2 = new ArrayList<>();
 
     public static Boolean isMe;
 
@@ -102,7 +100,7 @@ public class DasboardActivity extends AppCompatActivity
 
     public void setup_PopularMovie(){
         //SETUp Adapter
-        popularMovieAdapter = new PopularMovieAdapter(mResultsItems);
+        popularMovieAdapter = new PopularMovieAdapter(mMovieItems);
         popularMovieAdapter.setItemClickListenr(DasboardActivity.this);
 
         //SETUP RECYCLERVIEW
@@ -123,8 +121,8 @@ public class DasboardActivity extends AppCompatActivity
                 public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
                     ApiResponse apiResponse = response.body();
                     if (apiResponse != null){
-                        mResultsItems = apiResponse.getResults();
-                        popularMovieAdapter.setData(mResultsItems);
+                        mMovieItems = apiResponse.getResults();
+                        popularMovieAdapter.setData(mMovieItems);
 
                     }
                 }
@@ -142,7 +140,7 @@ public class DasboardActivity extends AppCompatActivity
 
     public void setup_HightRate(){
         //SETUp Adapter
-        popularMovieAdapter2 = new PopularMovieAdapter(mResultsItems2);
+        popularMovieAdapter2 = new PopularMovieAdapter(mMovieItems2);
         popularMovieAdapter2.setItemClickListenr(DasboardActivity.this);
 
         //SETUP RECYCLERVIEW
@@ -163,8 +161,8 @@ public class DasboardActivity extends AppCompatActivity
                 public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
                     ApiResponse apiResponse = response.body();
                     if (apiResponse != null){
-                        mResultsItems2 = apiResponse.getResults();
-                        popularMovieAdapter2.setData(mResultsItems2);
+                        mMovieItems2 = apiResponse.getResults();
+                        popularMovieAdapter2.setData(mMovieItems2);
 
                     }
                 }
@@ -239,7 +237,7 @@ public class DasboardActivity extends AppCompatActivity
     }
 
     @Override
-    public void onItemMovieClicked(ResultsItem movieItem) {
+    public void onItemMovieClicked(MovieItem movieItem) {
         DetailActivity.start(this, movieItem);
     }
 

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ResultsItem implements Parcelable {
+public class MovieItem implements Parcelable {
 
 	@SerializedName("overview")
 	private String overview;
@@ -54,7 +54,7 @@ public class ResultsItem implements Parcelable {
 	@SerializedName("vote_count")
 	private int voteCount;
 
-	public ResultsItem() {
+	public MovieItem() {
 	}
 
 	public void setOverview(String overview){
@@ -194,8 +194,8 @@ public class ResultsItem implements Parcelable {
 		return new Gson().toJson(this);
 	}
 
-	public ResultsItem fromJson(String newsJson){
-		return new Gson().fromJson(newsJson, ResultsItem.class);
+	public MovieItem fromJson(String newsJson){
+		return new Gson().fromJson(newsJson, MovieItem.class);
 	}
 
 
@@ -222,7 +222,7 @@ public class ResultsItem implements Parcelable {
 		dest.writeInt(this.voteCount);
 	}
 
-	protected ResultsItem(Parcel in) {
+	protected MovieItem(Parcel in) {
 		this.overview = in.readString();
 		this.originalLanguage = in.readString();
 		this.originalTitle = in.readString();
@@ -240,15 +240,15 @@ public class ResultsItem implements Parcelable {
 		this.voteCount = in.readInt();
 	}
 
-	public static final Parcelable.Creator<ResultsItem> CREATOR = new Parcelable.Creator<ResultsItem>() {
+	public static final Parcelable.Creator<MovieItem> CREATOR = new Parcelable.Creator<MovieItem>() {
 		@Override
-		public ResultsItem createFromParcel(Parcel source) {
-			return new ResultsItem(source);
+		public MovieItem createFromParcel(Parcel source) {
+			return new MovieItem(source);
 		}
 
 		@Override
-		public ResultsItem[] newArray(int size) {
-			return new ResultsItem[size];
+		public MovieItem[] newArray(int size) {
+			return new MovieItem[size];
 		}
 	};
 }

@@ -1,20 +1,15 @@
 package com.blikadek.popularmovie.adapter;
 
-import android.content.Context;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.blikadek.popularmovie.R;
 import com.blikadek.popularmovie.activity.DasboardActivity;
-import com.blikadek.popularmovie.activity.MainActivity;
 import com.blikadek.popularmovie.activity.MovieClickListeners;
-import com.blikadek.popularmovie.model.ResultsItem;
+import com.blikadek.popularmovie.model.MovieItem;
 import com.bumptech.glide.Glide;
 
 import java.util.List;
@@ -28,11 +23,11 @@ import butterknife.ButterKnife;
 
 public class PopularMovieAdapter extends RecyclerView.Adapter<PopularMovieAdapter.PopularMovieViewHolder>{
 
-    private List<ResultsItem> resultsItemList;
+    private List<MovieItem> movieItemList;
     private MovieClickListeners mMovieClickListeners;
 
-    public PopularMovieAdapter(List<ResultsItem> resultsItemList) {
-        this.resultsItemList = resultsItemList;
+    public PopularMovieAdapter(List<MovieItem> movieItemList) {
+        this.movieItemList = movieItemList;
     }
 
     @Override
@@ -54,14 +49,14 @@ public class PopularMovieAdapter extends RecyclerView.Adapter<PopularMovieAdapte
 
     @Override
     public void onBindViewHolder(PopularMovieViewHolder holder, final int position) {
-        holder.bind(resultsItemList.get(position));
+        holder.bind(movieItemList.get(position));
         holder.imgPoster.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Log.d("test", "test");
                 if (mMovieClickListeners != null){
                     mMovieClickListeners.onItemMovieClicked(
-                            resultsItemList.get(position)
+                            movieItemList.get(position)
                     );
                 }
             }
@@ -70,12 +65,12 @@ public class PopularMovieAdapter extends RecyclerView.Adapter<PopularMovieAdapte
 
     @Override
     public int getItemCount() {
-        return resultsItemList.size();
+        return movieItemList.size();
     }
 
-    public void setData(List<ResultsItem> data) {
-        this.resultsItemList.clear();
-        resultsItemList.addAll(data);
+    public void setData(List<MovieItem> data) {
+        this.movieItemList.clear();
+        movieItemList.addAll(data);
         notifyDataSetChanged();
     }
 
@@ -99,16 +94,16 @@ public class PopularMovieAdapter extends RecyclerView.Adapter<PopularMovieAdapte
 
         }
 
-        public void bind(ResultsItem resultsItem) {
+        public void bind(MovieItem movieItem) {
             String IMG_URL = "http://image.tmdb.org/t/p/";
             String IMG_SIZE = "w185";
 
             Glide.with(imgPoster.getContext())
-                    .load(IMG_URL + IMG_SIZE + resultsItem.getPosterPath())
+                    .load(IMG_URL + IMG_SIZE + movieItem.getPosterPath())
                     .into(imgPoster);
 
             /*Glide.with(imgPosterDasboard.getContext())
-                    .load(IMG_URL + IMG_SIZE + resultsItem.getPosterPath())
+                    .load(IMG_URL + IMG_SIZE + movieItem.getPosterPath())
                     .into(imgPosterDasboard);*/
 
         }

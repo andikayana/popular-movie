@@ -1,7 +1,5 @@
 package com.blikadek.popularmovie.activity;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -16,13 +14,12 @@ import com.blikadek.popularmovie.BuildConfig;
 import com.blikadek.popularmovie.R;
 import com.blikadek.popularmovie.adapter.PopularMovieAdapter;
 import com.blikadek.popularmovie.model.ApiResponse;
-import com.blikadek.popularmovie.model.ResultsItem;
+import com.blikadek.popularmovie.model.MovieItem;
 import com.blikadek.popularmovie.rest.ApiClient;
 import com.blikadek.popularmovie.rest.ApiService;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements MovieClickListene
     @BindView(R.id.swipeRefresh)SwipeRefreshLayout swipeRefresh;
     GridLayoutManager mGridLayoutManager;
     PopularMovieAdapter popularMovieAdapter;
-    private List<ResultsItem> mResultsItems = new ArrayList<>();
+    private List<MovieItem> mMovieItems = new ArrayList<>();
     String selectMenu;
     private Call<ApiResponse> apiResponseCall;
 
@@ -63,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements MovieClickListene
 
         }
         //SETUp Adapter
-        popularMovieAdapter = new PopularMovieAdapter(mResultsItems);
+        popularMovieAdapter = new PopularMovieAdapter(mMovieItems);
         popularMovieAdapter.setItemClickListenr(MainActivity.this);
 
         //SETUP RECYCLERVIEW
@@ -111,8 +108,8 @@ public class MainActivity extends AppCompatActivity implements MovieClickListene
                 public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
                     ApiResponse apiResponse = response.body();
                     if (apiResponse != null){
-                        mResultsItems = apiResponse.getResults();
-                        popularMovieAdapter.setData(mResultsItems);
+                        mMovieItems = apiResponse.getResults();
+                        popularMovieAdapter.setData(mMovieItems);
 
                         getSupportActionBar().setTitle(selectMenu); //set title on toolbar
 
@@ -134,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements MovieClickListene
     }
 
     @Override
-    public void onItemMovieClicked(ResultsItem movieItem) {
+    public void onItemMovieClicked(MovieItem movieItem) {
         //Toast.makeText(this, "test", Toast.LENGTH_SHORT).show();
         DetailActivity.start(this, movieItem);
 

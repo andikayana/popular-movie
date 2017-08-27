@@ -21,7 +21,7 @@ import android.widget.Toast;
 import com.blikadek.popularmovie.BuildConfig;
 import com.blikadek.popularmovie.R;
 import com.blikadek.popularmovie.adapter.ReviewAdapter;
-import com.blikadek.popularmovie.model.ResultsItem;
+import com.blikadek.popularmovie.model.MovieItem;
 import com.blikadek.popularmovie.model.review.ResultsItemReview;
 import com.blikadek.popularmovie.model.review.ReviewResponse;
 import com.blikadek.popularmovie.rest.ApiClient;
@@ -41,7 +41,7 @@ import retrofit2.Response;
 public class DetailActivity extends AppCompatActivity {
 
     private static final String KEY_EXTRA_MOVIE = "movie";
-    private ResultsItem mResultsItem;
+    private MovieItem mMovieItem;
 
     @BindView(R.id.toolbar)Toolbar toolbar;
     @BindView(R.id.poster) ImageView poster;
@@ -59,9 +59,9 @@ public class DetailActivity extends AppCompatActivity {
     ReviewAdapter reviewAdapter;
     private List<ResultsItemReview> mResultsItemReviews = new ArrayList<>();
 
-    public static void start(Context context, ResultsItem resultsItem){
+    public static void start(Context context, MovieItem movieItem){
         Intent intent = new Intent(context, DetailActivity.class);
-        intent.putExtra(KEY_EXTRA_MOVIE, resultsItem);
+        intent.putExtra(KEY_EXTRA_MOVIE, movieItem);
         context.startActivity(intent);
     }
 
@@ -80,24 +80,24 @@ public class DetailActivity extends AppCompatActivity {
 
     public void setupData(){
         if (getIntent().hasExtra(KEY_EXTRA_MOVIE)){
-            mResultsItem = getIntent().getParcelableExtra(KEY_EXTRA_MOVIE);
+            mMovieItem = getIntent().getParcelableExtra(KEY_EXTRA_MOVIE);
 
             String IMG_URL = "http://image.tmdb.org/t/p/";
             String IMG_SIZE = "w185";
             String IMG_SIZE_BACKDROP ="w300";
 
 
-            releaseDate.setText(DateFormater.getDate(mResultsItem.getReleaseDate()));
-            rating.setText(String.valueOf(mResultsItem.getVoteAverage())+"/10");
-            vote.setText(mResultsItem.getVoteCount()+" Vote");
-            language.setText(mResultsItem.getOriginalLanguage());
-            synopsis.setText(mResultsItem.getOverview());
+            releaseDate.setText(DateFormater.getDate(mMovieItem.getReleaseDate()));
+            rating.setText(String.valueOf(mMovieItem.getVoteAverage())+"/10");
+            vote.setText(mMovieItem.getVoteCount()+" Vote");
+            language.setText(mMovieItem.getOriginalLanguage());
+            synopsis.setText(mMovieItem.getOverview());
 
             Glide.with(backdrop.getContext())
-                    .load(IMG_URL + IMG_SIZE_BACKDROP + mResultsItem.getBackdropPath())
+                    .load(IMG_URL + IMG_SIZE_BACKDROP + mMovieItem.getBackdropPath())
                     .into(backdrop);
             Glide.with(poster.getContext())
-                    .load(IMG_URL + IMG_SIZE + mResultsItem.getPosterPath())
+                    .load(IMG_URL + IMG_SIZE + mMovieItem.getPosterPath())
                     .into(poster);
         } else {
             finish();
@@ -117,7 +117,7 @@ public class DetailActivity extends AppCompatActivity {
 
         ApiService apiService = ApiClient.getRetrofitClient().create(ApiService.class);
         Call<ReviewResponse> apiResponseCall = apiService.getReviews(
-                mResultsItem.getId(),
+                mMovieItem.getId(),
                 BuildConfig.API_KEY
         );
 
@@ -143,7 +143,7 @@ public class DetailActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(mResultsItem.getOriginalTitle());
+        actionBar.setTitle(mMovieItem.getOriginalTitle());
         //back home
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
