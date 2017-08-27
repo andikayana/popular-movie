@@ -1,5 +1,8 @@
 package com.blikadek.popularmovie.activity;
 
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.widget.NestedScrollView;
+import android.support.v7.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,8 +51,10 @@ public class DetailActivity extends AppCompatActivity {
     @BindView(R.id.vote) TextView vote;
     @BindView(R.id.language) TextView language;
     @BindView(R.id.expandedImage)ImageView backdrop;
-
+    @BindView(R.id.fab) FloatingActionButton fabFavorite;
+    @BindView(R.id.nestedScroolView) NestedScrollView nestedScrollView;
     @BindView(R.id.rvReviews) RecyclerView rvReview;
+    private boolean mIsFavorite = false;
     LinearLayoutManager mLinearLayoutManager;
     ReviewAdapter reviewAdapter;
     private List<ResultsItemReview> mResultsItemReviews = new ArrayList<>();
@@ -65,12 +71,10 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
         ButterKnife.bind(this);
 
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-
         setupData();
         setupReview();
+        setupActionBar();
+        setupFab();
 
     }
 
@@ -82,7 +86,7 @@ public class DetailActivity extends AppCompatActivity {
             String IMG_SIZE = "w185";
             String IMG_SIZE_BACKDROP ="w300";
 
-            getSupportActionBar().setTitle(mResultsItem.getOriginalTitle());
+
             releaseDate.setText(DateFormater.getDate(mResultsItem.getReleaseDate()));
             rating.setText(String.valueOf(mResultsItem.getVoteAverage())+"/10");
             vote.setText(mResultsItem.getVoteCount()+" Vote");
@@ -131,6 +135,38 @@ public class DetailActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ReviewResponse> call, Throwable t) {
                 Log.e("onFailure: ", String.valueOf(t));
+            }
+        });
+    }
+
+    public void setupActionBar(){
+
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(mResultsItem.getOriginalTitle());
+        //back home
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeButtonEnabled(true);
+
+    }
+
+    public void setupFab(){
+        nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                if (oldScrollY < scrollY){
+                    fabFavorite.hide();
+                } else {
+                    fabFavorite.show();
+                }
+            }
+        });
+
+        fabFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mIsFavorite = !mIsFavorite;
+                fabFavorite.setImageResource(mIsFavorite ? R.drawable.ic_favorite_select : R.drawable.ic_favorite_unselected);
             }
         });
     }
