@@ -17,9 +17,10 @@ public class DbContract {
         public static final String POSTER = "poster";
         public static final String SYNOPSIS = "synopsis";
         public static final String RATING = "rating";
+        public static final String ORIGINAL_LANGUAGE = "original_language";
         public static final String VOTE_COUNT = "vote_count";
         public static final String RELEASE_DATE = "release_date";
         public static final String BACKDROP = "backdrop";
-        public static final String LANGUAGE = "language";
+
     }
 }

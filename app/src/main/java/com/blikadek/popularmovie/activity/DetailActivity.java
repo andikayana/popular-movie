@@ -1,6 +1,7 @@
 package com.blikadek.popularmovie.activity;
 
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.ActionBar;
 import android.content.Context;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 import com.blikadek.popularmovie.BuildConfig;
 import com.blikadek.popularmovie.R;
 import com.blikadek.popularmovie.adapter.ReviewAdapter;
+import com.blikadek.popularmovie.database.DbOpenHelper;
 import com.blikadek.popularmovie.model.MovieItem;
 import com.blikadek.popularmovie.model.review.ResultsItemReview;
 import com.blikadek.popularmovie.model.review.ReviewResponse;
@@ -41,6 +43,7 @@ import retrofit2.Response;
 public class DetailActivity extends AppCompatActivity {
 
     private static final String KEY_EXTRA_MOVIE = "movie";
+
     private MovieItem mMovieItem;
 
     @BindView(R.id.toolbar)Toolbar toolbar;
@@ -55,6 +58,7 @@ public class DetailActivity extends AppCompatActivity {
     @BindView(R.id.nestedScroolView) NestedScrollView nestedScrollView;
     @BindView(R.id.rvReviews) RecyclerView rvReview;
     private boolean mIsFavorite = false;
+    private DbOpenHelper mDbOpenHelper;
     LinearLayoutManager mLinearLayoutManager;
     ReviewAdapter reviewAdapter;
     private List<ResultsItemReview> mResultsItemReviews = new ArrayList<>();
@@ -70,6 +74,11 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         ButterKnife.bind(this);
+        mDbOpenHelper= new DbOpenHelper(getApplicationContext());
+
+        if (!getIntent().hasExtra(KEY_EXTRA_MOVIE)) {
+            finish();
+        }
 
         setupData();
         setupReview();
@@ -154,19 +163,35 @@ public class DetailActivity extends AppCompatActivity {
         nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                if (oldScrollY < scrollY){
-                    fabFavorite.hide();
+                if (scrollY > oldScrollY){
+                    if(fabFavorite.isShown()){
+                        fabFavorite.hide();
+                    }
                 } else {
-                    fabFavorite.show();
+                    if(!fabFavorite.isShown()){
+                        fabFavorite.show();
+                    }
                 }
             }
         });
-
         fabFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mIsFavorite = !mIsFavorite;
-                fabFavorite.setImageResource(mIsFavorite ? R.drawable.ic_favorite_select : R.drawable.ic_favorite_unselected);
+                if (mIsFavorite){
+                    boolean isDeleteSuccess = mDbOpenHelper.deleteMovieItem(mMovieItem.getId());
+                    mIsFavorite = !isDeleteSuccess;
+                    fabFavorite.setImageResource(R.drawable.ic_favorite_select);
+                } else {
+                    mIsFavorite = mDbOpenHelper.saveMovieItem(mMovieItem) > 0;
+                    String snackBarText = mIsFavorite ? "News saved as favorite" : "Failed to save news";
+                    Snackbar.make(fabFavorite, snackBarText, Snackbar.LENGTH_SHORT)
+                            .show();
+                    fabFavorite.setImageResource(R.drawable.ic_favorite_unselected);
+                }
+
+                //fabFavorite.setImageResource(mIsFavorite ? R.drawable.ic_favorite_select : R.drawable.ic_favorite_unselected);
+
+
             }
         });
     }
@@ -192,6 +217,8 @@ public class DetailActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+
 }
 
 
