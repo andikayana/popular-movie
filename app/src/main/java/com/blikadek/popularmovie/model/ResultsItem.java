@@ -1,12 +1,16 @@
 package com.blikadek.popularmovie.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
-public class ResultsItem{
+public class ResultsItem implements Parcelable {
 
 	@SerializedName("overview")
 	private String overview;
@@ -193,4 +197,58 @@ public class ResultsItem{
 	public ResultsItem fromJson(String newsJson){
 		return new Gson().fromJson(newsJson, ResultsItem.class);
 	}
+
+
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeString(this.overview);
+		dest.writeString(this.originalLanguage);
+		dest.writeString(this.originalTitle);
+		dest.writeByte(this.video ? (byte) 1 : (byte) 0);
+		dest.writeString(this.title);
+		dest.writeList(this.genreIds);
+		dest.writeString(this.posterPath);
+		dest.writeString(this.backdropPath);
+		dest.writeString(this.releaseDate);
+		dest.writeDouble(this.voteAverage);
+		dest.writeDouble(this.popularity);
+		dest.writeInt(this.id);
+		dest.writeByte(this.adult ? (byte) 1 : (byte) 0);
+		dest.writeInt(this.voteCount);
+	}
+
+	protected ResultsItem(Parcel in) {
+		this.overview = in.readString();
+		this.originalLanguage = in.readString();
+		this.originalTitle = in.readString();
+		this.video = in.readByte() != 0;
+		this.title = in.readString();
+		this.genreIds = new ArrayList<Integer>();
+		in.readList(this.genreIds, Integer.class.getClassLoader());
+		this.posterPath = in.readString();
+		this.backdropPath = in.readString();
+		this.releaseDate = in.readString();
+		this.voteAverage = in.readDouble();
+		this.popularity = in.readDouble();
+		this.id = in.readInt();
+		this.adult = in.readByte() != 0;
+		this.voteCount = in.readInt();
+	}
+
+	public static final Parcelable.Creator<ResultsItem> CREATOR = new Parcelable.Creator<ResultsItem>() {
+		@Override
+		public ResultsItem createFromParcel(Parcel source) {
+			return new ResultsItem(source);
+		}
+
+		@Override
+		public ResultsItem[] newArray(int size) {
+			return new ResultsItem[size];
+		}
+	};
 }

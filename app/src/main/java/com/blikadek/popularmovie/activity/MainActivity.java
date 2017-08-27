@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements MovieClickListene
     @Override
     public void onItemMovieClicked(ResultsItem movieItem) {
         //Toast.makeText(this, "test", Toast.LENGTH_SHORT).show();
-        DetailActivity.start(this, movieItem.toJson());
+        DetailActivity.start(this, movieItem);
 
 
     }

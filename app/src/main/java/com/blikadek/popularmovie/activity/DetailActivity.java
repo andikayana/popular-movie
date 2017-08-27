@@ -53,9 +53,9 @@ public class DetailActivity extends AppCompatActivity {
     ReviewAdapter reviewAdapter;
     private List<ResultsItemReview> mResultsItemReviews = new ArrayList<>();
 
-    public static void start(Context context, String newsJson){
+    public static void start(Context context, ResultsItem resultsItem){
         Intent intent = new Intent(context, DetailActivity.class);
-        intent.putExtra(KEY_EXTRA_MOVIE, newsJson);
+        intent.putExtra(KEY_EXTRA_MOVIE, resultsItem);
         context.startActivity(intent);
     }
 
@@ -76,8 +76,7 @@ public class DetailActivity extends AppCompatActivity {
 
     public void setupData(){
         if (getIntent().hasExtra(KEY_EXTRA_MOVIE)){
-            String newsJson = getIntent().getStringExtra(KEY_EXTRA_MOVIE);
-            mResultsItem = new ResultsItem().fromJson(newsJson);
+            mResultsItem = getIntent().getParcelableExtra(KEY_EXTRA_MOVIE);
 
             String IMG_URL = "http://image.tmdb.org/t/p/";
             String IMG_SIZE = "w185";

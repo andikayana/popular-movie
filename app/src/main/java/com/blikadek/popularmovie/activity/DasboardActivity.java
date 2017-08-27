@@ -240,7 +240,7 @@ public class DasboardActivity extends AppCompatActivity
 
     @Override
     public void onItemMovieClicked(ResultsItem movieItem) {
-        DetailActivity.start(this, movieItem.toJson());
+        DetailActivity.start(this, movieItem);
     }
 
 }
