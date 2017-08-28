@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.blikadek.popularmovie.BuildConfig;
 import com.blikadek.popularmovie.R;
 import com.blikadek.popularmovie.adapter.PopularMovieAdapter;
+import com.blikadek.popularmovie.database.DbOpenHelper;
 import com.blikadek.popularmovie.model.ApiResponse;
 import com.blikadek.popularmovie.model.MovieItem;
 import com.blikadek.popularmovie.rest.ApiClient;
@@ -37,9 +38,9 @@ public class MainActivity extends AppCompatActivity implements MovieClickListene
     GridLayoutManager mGridLayoutManager;
     PopularMovieAdapter popularMovieAdapter;
     private List<MovieItem> mMovieItems = new ArrayList<>();
+
     String selectMenu;
     private Call<ApiResponse> apiResponseCall;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +57,9 @@ public class MainActivity extends AppCompatActivity implements MovieClickListene
                 break;
             case R.id.btnMoreHightRate:
                 selectMenu = "Hight Rated";
+                break;
+            case R.id.btnMoreFavorite:
+                selectMenu = "Favorites";
                 break;
 
         }
@@ -99,6 +103,15 @@ public class MainActivity extends AppCompatActivity implements MovieClickListene
                         BuildConfig.DEFAULT_LANG
                 );
                 break;
+            case "Favorites":
+
+                DbOpenHelper db = new DbOpenHelper(this);
+                recyclerView.setAdapter(new PopularMovieAdapter(db.getFavoriteMovie()));
+
+                getSupportActionBar().setTitle(selectMenu); //set title on toolbar
+                if(swipeRefresh.isRefreshing()) swipeRefresh.setRefreshing(false);  //stop refresh
+
+                break;
         }
 
         Log.d(TAG, "getData: API_KEY " + BuildConfig.API_KEY);
@@ -129,6 +142,8 @@ public class MainActivity extends AppCompatActivity implements MovieClickListene
         }
 
     }
+
+
 
     @Override
     public void onItemMovieClicked(MovieItem movieItem) {
@@ -162,6 +177,8 @@ public class MainActivity extends AppCompatActivity implements MovieClickListene
                 getData();
                 return true;
             case R.id.menu_Favorites:
+                selectMenu =  item.getTitle().toString();
+                getData();
                 return true;
             case R.id.menu_About:
                 return true;

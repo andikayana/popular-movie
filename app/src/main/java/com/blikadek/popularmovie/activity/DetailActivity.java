@@ -61,7 +61,7 @@ public class DetailActivity extends AppCompatActivity {
     @BindView(R.id.nestedScroolView) NestedScrollView nestedScrollView;
     @BindView(R.id.rvReviews) RecyclerView rvReview;
     @BindView(R.id.rvTrailer) RecyclerView rvTrailer;
-    private boolean mIsFavorite = false;
+    private boolean mIsMovieAsFavorite = false;
     private DbOpenHelper mDbOpenHelper;
     LinearLayoutManager mLinearLayoutManager, mLinearLayoutManagerTrailer;
     ReviewAdapter reviewAdapter;
@@ -86,11 +86,22 @@ public class DetailActivity extends AppCompatActivity {
             finish();
         }
 
+
+
         setupData();
         setupReview();
         setupActionBar();
         setupFab();
         setupTrailer();
+
+        mIsMovieAsFavorite = mDbOpenHelper.isMovieSaveAsFavorite(mMovieItem.getId());
+        if (mIsMovieAsFavorite){
+            mIsMovieAsFavorite = true;
+            fabFavorite.setImageResource(R.drawable.ic_favorite_unselected);
+        } else {
+            mIsMovieAsFavorite = false;
+            fabFavorite.setImageResource(R.drawable.ic_favorite_select);
+        }
 
     }
 
@@ -167,6 +178,11 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     public void setupFab(){
+      /*  boolean mIsMovieAsFavorite = mDbOpenHelper.isMovieSaveAsFavorite(mMovieItem.getId());
+        if (mIsMovieAsFavorite){
+            fabFavorite.setImageResource(R.drawable.ic_favorite_select);
+        }*/
+
         nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
@@ -184,19 +200,19 @@ public class DetailActivity extends AppCompatActivity {
         fabFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mIsFavorite){
+                if (mIsMovieAsFavorite){
                     boolean isDeleteSuccess = mDbOpenHelper.deleteMovieItem(mMovieItem.getId());
-                    mIsFavorite = !isDeleteSuccess;
+                    mIsMovieAsFavorite = !isDeleteSuccess;
                     fabFavorite.setImageResource(R.drawable.ic_favorite_select);
                 } else {
-                    mIsFavorite = mDbOpenHelper.saveMovieItem(mMovieItem) > 0;
-                    String snackBarText = mIsFavorite ? "News saved as favorite" : "Failed to save news";
+                    mIsMovieAsFavorite = mDbOpenHelper.saveMovieItem(mMovieItem) > 0;
+                    String snackBarText = mIsMovieAsFavorite ? "Movie saved as favorite" : "Failed to save news";
                     Snackbar.make(fabFavorite, snackBarText, Snackbar.LENGTH_SHORT)
                             .show();
                     fabFavorite.setImageResource(R.drawable.ic_favorite_unselected);
                 }
 
-                //fabFavorite.setImageResource(mIsFavorite ? R.drawable.ic_favorite_select : R.drawable.ic_favorite_unselected);
+                //fabFavorite.setImageResource(mIsMovieAsFavorite ? R.drawable.ic_favorite_select : R.drawable.ic_favorite_unselected);
 
 
             }

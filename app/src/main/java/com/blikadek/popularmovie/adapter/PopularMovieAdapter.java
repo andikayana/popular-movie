@@ -102,10 +102,6 @@ public class PopularMovieAdapter extends RecyclerView.Adapter<PopularMovieAdapte
                     .load(IMG_URL + IMG_SIZE + movieItem.getPosterPath())
                     .into(imgPoster);
 
-            /*Glide.with(imgPosterDasboard.getContext())
-                    .load(IMG_URL + IMG_SIZE + movieItem.getPosterPath())
-                    .into(imgPosterDasboard);*/
-
         }
     }
 

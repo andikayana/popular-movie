@@ -10,6 +10,7 @@ import android.util.Log;
 import com.blikadek.popularmovie.database.DbContract.MovieItemContract;
 import com.blikadek.popularmovie.model.MovieItem;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -114,7 +115,58 @@ public class DbOpenHelper  extends SQLiteOpenHelper{
             return totalRow>0;
     }
 
+    public List<MovieItem> getFavoriteMovie() {
+        SQLiteDatabase db = this.getReadableDatabase();
 
+        //select * from table
+        Cursor cursor = db.query(
+                MovieItemContract.TABLE_NAME,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+        );
 
+        int resultCount = cursor.getCount();
+        Log.d(TAG, "getFavoriteMovie: ");
+
+        List<MovieItem> movieItems = new ArrayList<>();
+        if (resultCount > 0) {
+            cursor.moveToFirst();
+            do {
+                Integer movie_id = cursor.getInt(cursor.getColumnIndex(MovieItemContract.MOVIE_ID));
+                String title = cursor.getString(cursor.getColumnIndex(MovieItemContract.TITLE));
+                String poster = cursor.getString(cursor.getColumnIndex(MovieItemContract.POSTER));
+                String backdrop = cursor.getString(cursor.getColumnIndex(MovieItemContract.BACKDROP));
+                String synopsis = cursor.getString(cursor.getColumnIndex(MovieItemContract.SYNOPSIS));
+                String release = cursor.getString(cursor.getColumnIndex(MovieItemContract.RELEASE_DATE));
+                Integer rating = cursor.getInt(cursor.getColumnIndex(MovieItemContract.RATING));
+                Integer vote = cursor.getInt(cursor.getColumnIndex(MovieItemContract.VOTE_COUNT));
+                String original_language = cursor.getString(cursor.getColumnIndex(MovieItemContract.ORIGINAL_LANGUAGE));
+
+                MovieItem item = new MovieItem();
+                item.setId(movie_id);
+                item.setTitle(title);
+                item.setPosterPath(poster);
+                item.setBackdropPath(backdrop);
+                item.setOverview(synopsis);
+                item.setReleaseDate(release);
+                item.setVoteAverage(rating);
+                item.setVoteCount(vote);
+                item.setOriginalLanguage(original_language);
+
+                movieItems.add(item);
+
+                Log.d(TAG, "getFavoriteMovies: movie " + item.getTitle());
+            }
+            while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+
+        return movieItems;
+    }
 
 }

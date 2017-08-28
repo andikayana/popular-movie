@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.blikadek.popularmovie.BuildConfig;
 import com.blikadek.popularmovie.R;
 import com.blikadek.popularmovie.adapter.PopularMovieAdapter;
+import com.blikadek.popularmovie.database.DbOpenHelper;
 import com.blikadek.popularmovie.model.ApiResponse;
 import com.blikadek.popularmovie.model.MovieItem;
 import com.blikadek.popularmovie.rest.ApiClient;
@@ -42,14 +43,19 @@ public class DasboardActivity extends AppCompatActivity
 
     @BindView(R.id.rvlistPoster) RecyclerView rvlistPoster;
     @BindView(R.id.rvlistPoster_HightRate) RecyclerView rvlistPoster_HightRate;
+    @BindView(R.id.rvlistPoster_Favorite) RecyclerView rvlistPoster_Favorite;
     @BindView(R.id.btnMore) TextView btnMore;
     @BindView(R.id.btnMoreHightRate) TextView btnMoreHightRate;
+    @BindView(R.id.btnMoreFavorite) TextView btnMoreFavorite;
     LinearLayoutManager mLinearLayoutManager;
     LinearLayoutManager mLinearLayoutManager_HightRate;
+    LinearLayoutManager mLinearLayoutManager_Favorite;
     PopularMovieAdapter popularMovieAdapter;
     PopularMovieAdapter popularMovieAdapter2;
+    PopularMovieAdapter popularMovieAdapter3;
     private List<MovieItem> mMovieItems = new ArrayList<>();
     private List<MovieItem> mMovieItems2 = new ArrayList<>();
+    private List<MovieItem> mMovieItems3 = new ArrayList<>();
 
     public static Boolean isMe;
 
@@ -82,6 +88,7 @@ public class DasboardActivity extends AppCompatActivity
 
         setup_PopularMovie();
         setup_HightRate();
+        setup_Favorite();
     }
 
     public void btnMore(View v) {
@@ -92,6 +99,12 @@ public class DasboardActivity extends AppCompatActivity
     }
 
     public void BtnMoreHightRate(View v) {
+        Intent i = new Intent(this, MainActivity.class);
+        isMe=false;
+        i.putExtra("button", v.getId());
+        startActivity(i);
+    }
+    public void BtnMoreFavorite(View v) {
         Intent i = new Intent(this, MainActivity.class);
         isMe=false;
         i.putExtra("button", v.getId());
@@ -177,6 +190,20 @@ public class DasboardActivity extends AppCompatActivity
         }
 
     }
+    public void setup_Favorite(){
+        //SETUp Adapter
+        popularMovieAdapter3 = new PopularMovieAdapter(mMovieItems3);
+        popularMovieAdapter3.setItemClickListenr(DasboardActivity.this);
+
+        //SETUP RECYCLERVIEW
+        mLinearLayoutManager_Favorite = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        rvlistPoster_Favorite.setLayoutManager(mLinearLayoutManager_Favorite);
+        rvlistPoster_Favorite.setHasFixedSize(true);
+
+        DbOpenHelper db = new DbOpenHelper(this);
+        rvlistPoster_Favorite.setAdapter(new PopularMovieAdapter(db.getFavoriteMovie()));
+
+    }
 
 
     @Override
@@ -224,7 +251,7 @@ public class DasboardActivity extends AppCompatActivity
             btnMoreHightRate.callOnClick();
 
         } else if (id == R.id.nav_favorite) {
-
+            btnMoreFavorite.callOnClick();
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_about) {

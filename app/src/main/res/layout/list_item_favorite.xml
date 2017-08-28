@@ -43,14 +43,14 @@
             android:textColor="@color/colorPrimary"
             android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
-            android:onClick="BtnMoreFAvorite"
+            android:onClick="BtnMoreFavorite"
             android:layout_marginRight="10dp"/>
 
 
     </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvlistPoster_HightRate"
+        android:id="@+id/rvlistPoster_Favorite"
         android:layout_width="match_parent"
         android:layout_height="160dp"
         android:layout_gravity="center_vertical"
