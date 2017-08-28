@@ -2,9 +2,9 @@ package com.blikadek.popularmovie.model.trailer;
 
 import java.util.List;
 
-public class Response{
+public class TrailerResponse {
 	private int id;
-	private List<ResultsItem> results;
+	private List<TrailerItem> results;
 
 	public void setId(int id){
 		this.id = id;
@@ -14,18 +14,18 @@ public class Response{
 		return id;
 	}
 
-	public void setResults(List<ResultsItem> results){
+	public void setResults(List<TrailerItem> results){
 		this.results = results;
 	}
 
-	public List<ResultsItem> getResults(){
+	public List<TrailerItem> getResults(){
 		return results;
 	}
 
 	@Override
  	public String toString(){
 		return 
-			"Response{" + 
+			"TrailerResponse{" +
 			"id = '" + id + '\'' + 
 			",results = '" + results + '\'' + 
 			"}";

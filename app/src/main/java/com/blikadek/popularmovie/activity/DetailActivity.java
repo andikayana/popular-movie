@@ -22,10 +22,13 @@ import android.widget.Toast;
 import com.blikadek.popularmovie.BuildConfig;
 import com.blikadek.popularmovie.R;
 import com.blikadek.popularmovie.adapter.ReviewAdapter;
+import com.blikadek.popularmovie.adapter.TrailerAdapter;
 import com.blikadek.popularmovie.database.DbOpenHelper;
 import com.blikadek.popularmovie.model.MovieItem;
 import com.blikadek.popularmovie.model.review.ResultsItemReview;
 import com.blikadek.popularmovie.model.review.ReviewResponse;
+import com.blikadek.popularmovie.model.trailer.TrailerItem;
+import com.blikadek.popularmovie.model.trailer.TrailerResponse;
 import com.blikadek.popularmovie.rest.ApiClient;
 import com.blikadek.popularmovie.rest.ApiService;
 import com.blikadek.popularmovie.rest.DateFormater;
@@ -57,11 +60,14 @@ public class DetailActivity extends AppCompatActivity {
     @BindView(R.id.fab) FloatingActionButton fabFavorite;
     @BindView(R.id.nestedScroolView) NestedScrollView nestedScrollView;
     @BindView(R.id.rvReviews) RecyclerView rvReview;
+    @BindView(R.id.rvTrailer) RecyclerView rvTrailer;
     private boolean mIsFavorite = false;
     private DbOpenHelper mDbOpenHelper;
-    LinearLayoutManager mLinearLayoutManager;
+    LinearLayoutManager mLinearLayoutManager, mLinearLayoutManagerTrailer;
     ReviewAdapter reviewAdapter;
+    TrailerAdapter trailerAdapter;
     private List<ResultsItemReview> mResultsItemReviews = new ArrayList<>();
+    private List<TrailerItem> mTrailerItem = new ArrayList<>();
 
     public static void start(Context context, MovieItem movieItem){
         Intent intent = new Intent(context, DetailActivity.class);
@@ -84,6 +90,7 @@ public class DetailActivity extends AppCompatActivity {
         setupReview();
         setupActionBar();
         setupFab();
+        setupTrailer();
 
     }
 
@@ -192,6 +199,38 @@ public class DetailActivity extends AppCompatActivity {
                 //fabFavorite.setImageResource(mIsFavorite ? R.drawable.ic_favorite_select : R.drawable.ic_favorite_unselected);
 
 
+            }
+        });
+    }
+
+    public void setupTrailer(){
+        //SETUp Adapter
+        trailerAdapter = new TrailerAdapter(mTrailerItem);
+
+        //SETUP RECYCLERVIEW
+        mLinearLayoutManagerTrailer = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        rvTrailer.setLayoutManager(mLinearLayoutManagerTrailer);
+        rvTrailer.setAdapter(trailerAdapter);
+
+        ApiService apiService = ApiClient.getRetrofitClient().create(ApiService.class);
+        Call<TrailerResponse> apiResponseCall = apiService.getTrailers(
+                mMovieItem.getId(),
+                BuildConfig.API_KEY
+        );
+
+        apiResponseCall.enqueue(new Callback<TrailerResponse>() {
+            @Override
+            public void onResponse(Call<TrailerResponse> call, Response<TrailerResponse> response) {
+                TrailerResponse trailerResponse = response.body();
+                if (trailerResponse != null){
+                    mTrailerItem = trailerResponse.getResults();
+                    trailerAdapter.setData(mTrailerItem);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<TrailerResponse> call, Throwable t) {
+                Log.e("onFailure: ", String.valueOf(t));
             }
         });
     }

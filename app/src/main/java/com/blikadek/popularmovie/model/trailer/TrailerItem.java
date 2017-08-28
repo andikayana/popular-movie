@@ -1,6 +1,6 @@
 package com.blikadek.popularmovie.model.trailer;
 
-public class ResultsItem{
+public class TrailerItem {
 	private String site;
 	private int size;
 	private String iso31661;

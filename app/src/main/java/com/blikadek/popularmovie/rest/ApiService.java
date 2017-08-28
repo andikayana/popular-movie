@@ -2,6 +2,7 @@ package com.blikadek.popularmovie.rest;
 
 import com.blikadek.popularmovie.model.ApiResponse;
 import com.blikadek.popularmovie.model.review.ReviewResponse;
+import com.blikadek.popularmovie.model.trailer.TrailerResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -29,4 +30,10 @@ public interface ApiService {
             @Path("id") long id,
             @Query("api_key") String api_key
     );
+    @GET("movie/{id}/videos?")
+    Call<TrailerResponse> getTrailers(
+            @Path("id") long id,
+            @Query("api_key") String api_key
+    );
+
 }
