@@ -178,11 +178,6 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     public void setupFab(){
-      /*  boolean mIsMovieAsFavorite = mDbOpenHelper.isMovieSaveAsFavorite(mMovieItem.getId());
-        if (mIsMovieAsFavorite){
-            fabFavorite.setImageResource(R.drawable.ic_favorite_select);
-        }*/
-
         nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {

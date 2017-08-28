@@ -104,9 +104,12 @@ public class MainActivity extends AppCompatActivity implements MovieClickListene
                 );
                 break;
             case "Favorites":
-
+                apiResponseCall = null;
                 DbOpenHelper db = new DbOpenHelper(this);
-                recyclerView.setAdapter(new PopularMovieAdapter(db.getFavoriteMovie()));
+                //recyclerView.setAdapter(new PopularMovieAdapter(db.getFavoriteMovie()));
+                //mMovieItems.clear();
+                mMovieItems = db.getFavoriteMovie();
+                popularMovieAdapter.setData(mMovieItems);
 
                 getSupportActionBar().setTitle(selectMenu); //set title on toolbar
                 if(swipeRefresh.isRefreshing()) swipeRefresh.setRefreshing(false);  //stop refresh
