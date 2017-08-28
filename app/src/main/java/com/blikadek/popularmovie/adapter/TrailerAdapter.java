@@ -1,5 +1,7 @@
 package com.blikadek.popularmovie.adapter;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -62,14 +64,26 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerV
             ButterKnife.bind(this, itemView);
         }
 
-        public void bind(TrailerItem trailerItem) {
+        public void bind(final TrailerItem trailerItem) {
             String IMG_URL = "http://img.youtube.com/vi/";
             String IMG_END = "/0.jpg";
+            final String YOUTUBE_URL = "http://www.youtube.com/watch?v=";
 
             tvTraillerTitle.setText(trailerItem.getName());
             Glide.with(imgTrailer.getContext())
                     .load(IMG_URL + trailerItem.getKey() + IMG_END)
                     .into(imgTrailer);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    itemView.getContext()
+                            .startActivity(new Intent(
+                                    Intent.ACTION_VIEW,
+                                    Uri.parse(YOUTUBE_URL + trailerItem.getKey())
+                            ));
+                }
+            });
         }
     }
 }
