@@ -141,6 +141,7 @@ public class DetailActivity extends AppCompatActivity {
         mLinearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         rvReview.setLayoutManager(mLinearLayoutManager);
         rvReview.setAdapter(reviewAdapter);
+        rvReview.setNestedScrollingEnabled(false);
 
         ApiService apiService = ApiClient.getRetrofitClient().create(ApiService.class);
         Call<ReviewResponse> apiResponseCall = apiService.getReviews(
@@ -222,6 +223,7 @@ public class DetailActivity extends AppCompatActivity {
         mLinearLayoutManagerTrailer = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         rvTrailer.setLayoutManager(mLinearLayoutManagerTrailer);
         rvTrailer.setAdapter(trailerAdapter);
+        rvTrailer.setNestedScrollingEnabled(false);
 
         ApiService apiService = ApiClient.getRetrofitClient().create(ApiService.class);
         Call<TrailerResponse> apiResponseCall = apiService.getTrailers(
@@ -267,6 +269,7 @@ public class DetailActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
 
 
 }

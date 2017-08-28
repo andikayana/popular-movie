@@ -47,6 +47,7 @@ public class DasboardActivity extends AppCompatActivity
     @BindView(R.id.btnMore) TextView btnMore;
     @BindView(R.id.btnMoreHightRate) TextView btnMoreHightRate;
     @BindView(R.id.btnMoreFavorite) TextView btnMoreFavorite;
+    @BindView(R.id.toolbar) Toolbar toolbar;
     LinearLayoutManager mLinearLayoutManager;
     LinearLayoutManager mLinearLayoutManager_HightRate;
     LinearLayoutManager mLinearLayoutManager_Favorite;
@@ -64,18 +65,13 @@ public class DasboardActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dasboard);
         ButterKnife.bind(this);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        isMe = true;
 
-        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });*/
+        setupData();
+    }
+
+    public void setupData(){
+        isMe = true;
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -159,7 +155,7 @@ public class DasboardActivity extends AppCompatActivity
         //SETUP RECYCLERVIEW
         mLinearLayoutManager_HightRate = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         rvlistPoster_HightRate.setLayoutManager(mLinearLayoutManager_HightRate);
-        rvlistPoster.setHasFixedSize(true);
+        rvlistPoster_HightRate.setHasFixedSize(true);
         rvlistPoster_HightRate.setAdapter(popularMovieAdapter2);
 
         ApiService apiService = ApiClient.getRetrofitClient().create(ApiService.class);
@@ -193,7 +189,6 @@ public class DasboardActivity extends AppCompatActivity
     public void setup_Favorite(){
         //SETUp Adapter
         popularMovieAdapter3 = new PopularMovieAdapter(mMovieItems3);
-        popularMovieAdapter3.setItemClickListenr(DasboardActivity.this);
 
         //SETUP RECYCLERVIEW
         mLinearLayoutManager_Favorite = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
@@ -201,8 +196,10 @@ public class DasboardActivity extends AppCompatActivity
         rvlistPoster_Favorite.setHasFixedSize(true);
 
         DbOpenHelper db = new DbOpenHelper(this);
-        rvlistPoster_Favorite.setAdapter(new PopularMovieAdapter(db.getFavoriteMovie()));
+        mMovieItems3 = db.getFavoriteMovie();
+        rvlistPoster_Favorite.setAdapter(new PopularMovieAdapter(mMovieItems3));
 
+        popularMovieAdapter3.setItemClickListenr(DasboardActivity.this);
     }
 
 
@@ -231,7 +228,10 @@ public class DasboardActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_refresh) {
+            setupData();
+
+            Toast.makeText(this, "Data Refresh", Toast.LENGTH_SHORT).show();
             return true;
         }
 
@@ -246,10 +246,8 @@ public class DasboardActivity extends AppCompatActivity
 
         if (id == R.id.nav_popular_movie) {
            btnMore.callOnClick();
-
         } else if (id == R.id.nav_hight_rate) {
             btnMoreHightRate.callOnClick();
-
         } else if (id == R.id.nav_favorite) {
             btnMoreFavorite.callOnClick();
         } else if (id == R.id.nav_share) {

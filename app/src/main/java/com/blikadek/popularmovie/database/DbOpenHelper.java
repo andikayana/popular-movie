@@ -148,7 +148,7 @@ public class DbOpenHelper  extends SQLiteOpenHelper{
 
                 MovieItem item = new MovieItem();
                 item.setId(movie_id);
-                item.setTitle(title);
+                item.setOriginalTitle(title);
                 item.setPosterPath(poster);
                 item.setBackdropPath(backdrop);
                 item.setOverview(synopsis);
