@@ -263,7 +263,13 @@ public class DetailActivity extends AppCompatActivity {
                 return true;
             //tombl share
             case R.id.menu_share:
-                Toast.makeText(this, "Share Clicked", Toast.LENGTH_SHORT).show();
+                Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+                sharingIntent.setType("text/plain");
+                String shareBody = "andikayana99@gmail.com";
+                String shareSub="Andika Yana";
+                sharingIntent.putExtra(Intent.EXTRA_SUBJECT, shareSub);
+                sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
+                startActivity(Intent.createChooser(sharingIntent, "Share Using"));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
