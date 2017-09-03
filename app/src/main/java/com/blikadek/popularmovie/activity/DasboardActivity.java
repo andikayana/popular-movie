@@ -43,20 +43,20 @@ public class DasboardActivity extends AppCompatActivity
 
     @BindView(R.id.rvlistPoster) RecyclerView rvlistPoster;
     @BindView(R.id.rvlistPoster_HightRate) RecyclerView rvlistPoster_HightRate;
-    @BindView(R.id.rvlistPoster_Favorite) RecyclerView rvlistPoster_Favorite;
+   @BindView(R.id.rvlistPoster_Favorite) RecyclerView rvlistPoster_Favorite;
     @BindView(R.id.btnMore) TextView btnMore;
     @BindView(R.id.btnMoreHightRate) TextView btnMoreHightRate;
     @BindView(R.id.btnMoreFavorite) TextView btnMoreFavorite;
     @BindView(R.id.toolbar) Toolbar toolbar;
     LinearLayoutManager mLinearLayoutManager;
     LinearLayoutManager mLinearLayoutManager_HightRate;
-    LinearLayoutManager mLinearLayoutManager_Favorite;
+   LinearLayoutManager mLinearLayoutManager_Favorite;
     PopularMovieAdapter popularMovieAdapter;
     PopularMovieAdapter popularMovieAdapter2;
-    PopularMovieAdapter popularMovieAdapter3;
+   PopularMovieAdapter popularMovieAdapter3;
     private List<MovieItem> mMovieItems = new ArrayList<>();
     private List<MovieItem> mMovieItems2 = new ArrayList<>();
-    private List<MovieItem> mMovieItems3 = new ArrayList<>();
+   private List<MovieItem> mMovieItems3 = new ArrayList<>();
 
     public static Boolean isMe;
 
@@ -106,6 +106,8 @@ public class DasboardActivity extends AppCompatActivity
         i.putExtra("button", v.getId());
         startActivity(i);
     }
+
+
 
     public void setup_PopularMovie(){
         //SETUp Adapter
@@ -186,7 +188,7 @@ public class DasboardActivity extends AppCompatActivity
         }
 
     }
-    public void setup_Favorite(){
+   public void setup_Favorite(){
         //SETUp Adapter
         popularMovieAdapter3 = new PopularMovieAdapter(mMovieItems3);
 
@@ -201,7 +203,6 @@ public class DasboardActivity extends AppCompatActivity
 
         popularMovieAdapter3.setItemClickListenr(DasboardActivity.this);
     }
-
 
     @Override
     public void onBackPressed() {

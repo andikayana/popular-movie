@@ -265,7 +265,7 @@ public class DetailActivity extends AppCompatActivity {
             case R.id.menu_share:
                 Intent sharingIntent = new Intent(Intent.ACTION_SEND);
                 sharingIntent.setType("text/plain");
-                String shareBody = "andikayana99@gmail.com";
+                String shareBody = mMovieItem.getOriginalTitle();
                 String shareSub="Andika Yana";
                 sharingIntent.putExtra(Intent.EXTRA_SUBJECT, shareSub);
                 sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
